@@ -1,4 +1,28 @@
-<?php require 'inc/head.php'; ?>
+<?php
+
+session_start();
+
+if (!empty($_SESSION['name'])) {
+    header('Location: /');
+    die('already loged in');
+}
+
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['loginname']);
+    if (empty($name)) {
+        $error = 'Please enter a name';
+    }
+
+    if (empty($error)) {
+        $_SESSION['name'] = $name;
+        header('Location: /');
+        die('login in, redirecting');
+    }
+}
+
+ require 'inc/head.php'; ?>
+
 <div class="container" style="margin-top:40px">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -7,7 +31,7 @@
                     <strong> Sign in to continue</strong>
                 </div>
                 <div class="panel-body">
-                    <form role="form" action="#" method="POST">
+                    <form role="form" action="" method="POST">
                         <fieldset>
                             <div class="row">
                                 <div class="center-block">
@@ -29,6 +53,9 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in">
+                                        <?php if (!empty($error)) : ?>
+                                            <p><?= $error ?></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>

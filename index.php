@@ -1,4 +1,19 @@
-<?php require 'inc/data/products.php'; ?>
+<?php
+require 'inc/data/products.php';
+session_start();
+if (!empty($_GET['add_to_cart']) && is_numeric($_GET['add_to_cart'])) {
+    if (!empty($catalog[$_GET['add_to_cart']])) {
+        $product = $catalog[$_GET['add_to_cart']]['name'];
+        if (!empty($_SESSION['cart'][$product])) {
+            $_SESSION['cart'][$product]['total']++;
+        } else {
+            $_SESSION['cart'][$product]['name'] = $product;
+            $_SESSION['cart'][$product]['total'] = 1;
+        }
+    }
+}
+?>
+
 <?php require 'inc/head.php'; ?>
 <section class="cookies container-fluid">
     <div class="row">

@@ -43,11 +43,16 @@
                             Cart
                         </a>
                     </li>
+                    <?php if (!empty($_SESSION['name'])) : ?>
+                        <li><a href="/logout.php">Log out</a></li>
+                    <?php else : ?>
+                        <li><a href="/login.php">Log in</a></li>
+                    <?php endif; ?>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
     <div class="container-fluid text-right">
-        <strong>Hello Wilder !</strong>
+        <strong>Hello <?= $_SESSION['name'] ?? 'Wilder' ?> !</strong>
     </div>
 </header>
